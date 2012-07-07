@@ -19,6 +19,10 @@ def createConfigFile():
     "command": "haml -nq #{$fileName}.haml #{$fileName}.html"
     /* 执行命令 */
   },
+  ".jade": {
+    "command": "jade #{$fileName}.jade -PO ./"
+    /* 执行命令 */
+  },
   ".sass": {
     "command": "sass #{$fileName}.sass #{$fileName}.css"
     /* 执行命令 */
