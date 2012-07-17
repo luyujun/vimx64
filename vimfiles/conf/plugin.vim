@@ -517,6 +517,9 @@ let g:user_zen_settings = {
 \			'wid': 'widows: |'
 \		}
 \	},
+\	'stylus':{
+\		'extends': 'sass'
+\	},
 \}
 " ZenCoding展开快键
 let g:user_zen_expandabbr_key='<C-e>'
