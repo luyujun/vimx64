@@ -74,8 +74,8 @@ set dictionary=$VIMFILES/dict/main.dict
 " --------------------------------------------------
 " [文件编码] {{{1
 " --------------------------------------------------
-" 设置文件尝试编码
-set fileencodings=utf-8,ucs-bom,gbk,cp936,cp950,latin1
+" 设置文件尝试编码[简体中文cp936、gbk;繁体中文cp950、big5;utf8:同一页面显示中文简体繁体及其它语言(如日文，韩文)]
+set fileencodings=cp936,gbk,cp950,utf-8,ucs-bom,latin1
 " 设置默认文件编码
 set fileencoding=utf-8
 if has("gui_running")
