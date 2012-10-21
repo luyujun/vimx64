@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # --------------------------------------------------
 #   FileName: autocommand.py
-#       Desc: æ’ä»¶pythonéƒ¨ä»½
+#       Desc: ²å¼şpython²¿·İ
 #     Author: lcc
 #      Email: leftcold@gmail.com
 #    Version: 0.1
@@ -13,33 +13,33 @@ import os, re, sys, vim, json, time, types, locale, subprocess
 cFileName = '_config'
 
 def createConfigFile():
-  # åˆå§‹åŒ–é…ç½®
+  # ³õÊ¼»¯ÅäÖÃ
   config = '''{
   ".haml": {
-    "command": "haml -nq #{$fileName}.haml #{$fileName}.html"
-    /* æ‰§è¡Œå‘½ä»¤ */
+    "command": "haml -nq #{$fileName}.haml>../#{$fileName}.htm"
+    /* Ö´ĞĞÃüÁî */
   },
   ".jade": {
-    "command": "jade #{$fileName}.jade -PO ./"
-    /* æ‰§è¡Œå‘½ä»¤ */
+    "command": "jade #{$fileName}.jade -PO>../#{$fileName}.htm"
+    /* Ö´ĞĞÃüÁî */
   },
   ".sass": {
-    "command": "sass #{$fileName}.sass #{$fileName}.css"
-    /* æ‰§è¡Œå‘½ä»¤ */
+    "command": "sass --style compact #{$fileName}.sass>../css/#{$fileName}.css"
+    /* Ö´ĞĞÃüÁî */
   },
   ".less": {
-    "command": "lessc #{$fileName}.less>#{$fileName}.css"
-    /* æ‰§è¡Œå‘½ä»¤ */
+    "command": "lessc #{$fileName}.less>../css/#{$fileName}.css"
+    /* Ö´ĞĞÃüÁî */
   },
   ".coffee": {
     "command": "coffee -bp #{$fileName}.coffee>#{$fileName}.js"
-    /* æ‰§è¡Œå‘½ä»¤ */
+    /* Ö´ĞĞÃüÁî */
   }
 }'''
-  # å†™å…¥é…ç½®
+  # Ğ´ÈëÅäÖÃ
   fp = open(cFileName, 'w')
   fp.write(config)
-  # å…³é—­æ–‡ä»¶
+  # ¹Ø±ÕÎÄ¼ş
   fp.close()
   del fp
 
@@ -47,15 +47,15 @@ def createConfigFile():
 
 def readConfig(cPath):
   if os.path.isfile(cPath+'/'+cFileName):
-    # è¯»å–é…ç½®
+    # ¶ÁÈ¡ÅäÖÃ
     fp = open(cPath+'/'+cFileName)
     config = fp.read()
     fp.close()
     del fp
-    # å»é™¤æ³¨é‡Š
+    # È¥³ı×¢ÊÍ
     rex = re.compile(r'^(?:\s+|)/\*.*?\*/(?:\s+|)$', re.M+re.S)
     config = rex.sub('', config)
-    # åºåˆ—åŒ–Json
+    # ĞòÁĞ»¯Json
     config = json.loads(config)
   else:
     config = False
@@ -64,12 +64,12 @@ def readConfig(cPath):
 
 def getCommand(path, fname, suffix):
   config = readConfig(path)
-  #å¦‚æœè¯»å–é…å¤±è´¥åˆ™è¿”å›False
+  #Èç¹û¶ÁÈ¡ÅäÊ§°ÜÔò·µ»ØFalse
   if not config:
-    #å¦‚æœæœªä»é…ç½®æ–‡ä»¶å–åˆ°å‘½ä»¤åˆ™ä»vimä¸­è¯»å–å‘½ä»¤
+    #Èç¹ûÎ´´ÓÅäÖÃÎÄ¼şÈ¡µ½ÃüÁîÔò´ÓvimÖĞ¶ÁÈ¡ÃüÁî
     command = vim.eval('autocommand#getCommand("'+suffix+'")')
   else:
-    #è¯»å–é…ç½®æˆåŠŸ
+    #¶ÁÈ¡ÅäÖÃ³É¹¦
     command = config[suffix]['command']
   if type(command) is types.ListType:
     command = '|'.join(command)
@@ -99,7 +99,7 @@ def getCommand(path, fname, suffix):
   #return result
 
 def runCommand():
-  # è·å–æ–‡ä»¶ç›¸å…³ä¿¡æ¯
+  # »ñÈ¡ÎÄ¼şÏà¹ØĞÅÏ¢
   fullFileName = vim.eval('w:fullFileName')
   if os.name == 'nt':
     fullFileName = re.sub(r'\\', '/', fullFileName)
@@ -108,7 +108,7 @@ def runCommand():
   filePath = result[0]
   fileName = result[1]
   fileSuffix = result[2]
-  # æ£€æµ‹å‘½ä»¤ç¼“å­˜
+  # ¼ì²âÃüÁî»º´æ
   commandCache = vim.eval('w:commandCache')
   if not commandCache:
     command=getCommand(filePath, fileName, fileSuffix)
@@ -118,12 +118,12 @@ def runCommand():
     #print "use cache"
     command=commandCache
 
-  # å°†UTF-8çš„ç¼–ç è½¬æ¢ä¸ºç³»ç»Ÿé»˜è®¤æ–‡ä»¶ç¼–ç 
+  # ½«UTF-8µÄ±àÂë×ª»»ÎªÏµÍ³Ä¬ÈÏÎÄ¼ş±àÂë
   if sys.platform == 'win32':
     localeencoding = locale.getdefaultlocale()[1]
     command = command.decode('UTF-8').encode(localeencoding or 'cp936')
 
-  # å‘½ä»¤æ•°ç»„
+  # ÃüÁîÊı×é
   if command.find('|') > -1:
       command = command.split('|')
   else:
@@ -131,40 +131,40 @@ def runCommand():
 
   commandName = ''
 
-  # æ”¹å˜è·¯å¾„
+  # ¸Ä±äÂ·¾¶
   if filePath != '':
     tempPath = os.getcwd();
     os.chdir(filePath);
 
   for i in range(0, len(command)):
-    # è·å–æ‰§è¡Œå‘½ä»¤çš„åç§°
+    # »ñÈ¡Ö´ĞĞÃüÁîµÄÃû³Æ
     if not commandName:
       commandName = re.match(r'(^[^|> ]+)', command[i])
       if commandName:
         commandName = ' '+commandName.group()
       else:
         commandName = ' command'
-    # æ‰§è¡Œå‘½ä»¤
+    # Ö´ĞĞÃüÁî
     ret = subprocess.Popen(command[i], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     errMsg = ret.stderr.read()
     if errMsg != '': break
 
-  # è¿”å›åˆå§‹ç›®å½•
+  # ·µ»Ø³õÊ¼Ä¿Â¼
   if filePath != '':
     os.chdir(tempPath)
-  # æ‰“å°é”™è¯¯ä¿¡æ¯
+  # ´òÓ¡´íÎóĞÅÏ¢
   if errMsg:
-    #è½¬ä¹‰æ¢è¡Œç¬¦
+    #×ªÒå»»ĞĞ·û
     errMsg = re.sub(r'\r(?:\n|)', r'\n', errMsg)
-    #è½¬ä¹‰æ–œæ 
+    #×ªÒåĞ±¸Ü
     errMsg = re.sub(r'\\', r'\\\\', errMsg)
-    #è½¬ä¹‰å¼•å·
+    #×ªÒåÒıºÅ
     errMsg = re.sub(r'\"', r'\\"', errMsg)
-    #æ‰“å°é”™è¯¯å‘½ä»¤
+    #´òÓ¡´íÎóÃüÁî
     vim.command('echohl ErrorMsg | echo "'+errMsg+'" | echohl None')
-  #æ‰“å°æ‰§è¡Œç»“æœ
+  #´òÓ¡Ö´ĞĞ½á¹û
   else:
-    #æ‰“å°æ‰§è¡ŒæˆåŠŸå‘½ä»¤
+    #´òÓ¡Ö´ĞĞ³É¹¦ÃüÁî
     print time.strftime('%H:%M:%S')+' execute'+commandName
 
 #if __name__ == '__main__':
