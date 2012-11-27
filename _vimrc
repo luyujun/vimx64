@@ -25,9 +25,7 @@ if !exists('g:lcc_loaded') | cal LoadLCC() | en
 " vim:fdm=marker:fdc=1
 
 set autochdir
-let g:www="d:/web/www/"
-let g:nduoa=g:www . "nduoa.com/"
-let g:ndoo=g:www . "ndoo/"
+let g:www="f:/www/"
 function Cw(dir)
   execute ":cd " . a:dir
 endfunction
