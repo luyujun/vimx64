@@ -70,7 +70,7 @@ fu! CssFF(t)
 endf
 " 映射键
 nn <A-f>j :cal CssFF('jtl')<CR>
-nn <A-f>s :cal CssFF('stl')<CR>
+nn <A-f>k :cal CssFF('stl')<CR>
 nn <A-f>l :cal CssFF('ctl')<CR>
 nn <A-f>u :cal CssFF('ctu')<CR>
 nn <A-f>t :cal CssFF('ft')<CR>
