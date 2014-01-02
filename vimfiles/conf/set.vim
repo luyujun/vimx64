@@ -109,6 +109,7 @@ if has('gui_running')
 	"set go=r "set go-=m "set go-=T "set go+=b
 	set go=
 	set winaltkeys=no
+  set macmeta
 	if has('win32')
 		" 最大化窗体
 		au GUIEnter * simalt ~x

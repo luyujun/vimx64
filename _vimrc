@@ -16,7 +16,7 @@ be mswin
 " let g:lcc_loaded = 1
 fu! LoadLCC()
 	let g:lcc_loaded=1
-	if !exists('$VIMFILES') | let $VIMFILES=$VIM.'/vimfiles' | en
+	if !exists('$VIMFILES') | let $VIMFILES=$HOME.'/.vim' | en
 	if has('win32') | set rtp+=$VIMFILES | en
 	so $VIMFILES/conf/main.vim
 endf
@@ -25,7 +25,7 @@ if !exists('g:lcc_loaded') | cal LoadLCC() | en
 " vim:fdm=marker:fdc=1
 
 set autochdir
-let g:www="f:/www/"
+let g:www="~/www/"
 function Cw(dir)
   execute ":cd " . a:dir
 endfunction
