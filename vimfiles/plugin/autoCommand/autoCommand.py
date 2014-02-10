@@ -17,23 +17,27 @@ def createConfigFile():
   config = '''{
   ".haml": {
     "command": "haml -nq #{$fileName}.haml>../#{$fileName}.htm"
-    /* Ö´ÐÐÃüÁî */
   },
   ".jade": {
     "command": "jade #{$fileName}.jade -PO>../#{$fileName}.htm"
-    /* Ö´ÐÐÃüÁî */
   },
   ".sass": {
-    "command": "sass --style compact #{$fileName}.sass>../css/#{$fileName}.css"
-    /* Ö´ÐÐÃüÁî */
+    "command": [
+      "sass --style compact --sourcemap #{$fileName}.sass ../css/#{$fileName}.full.css",
+      "sass --style compressed #{$fileName}.sass ../css/#{$fileName}.css"
+    ]
+  },
+  ".scss": {
+    "command": [
+      "sass --scss --style compact --sourcemap #{$fileName}.scss ../css/#{$fileName}.full.css",
+      "sass --scss --style compressed #{$fileName}.scss ../css/#{$fileName}.css"
+    ]
   },
   ".less": {
     "command": "lessc #{$fileName}.less>../css/#{$fileName}.css"
-    /* Ö´ÐÐÃüÁî */
   },
   ".coffee": {
     "command": "coffee -bp #{$fileName}.coffee>#{$fileName}.js"
-    /* Ö´ÐÐÃüÁî */
   }
 }'''
   # Ð´ÈëÅäÖÃ
