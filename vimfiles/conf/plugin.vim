@@ -525,7 +525,16 @@ let g:user_zen_settings = {
 \	},
 \}
 " ZenCoding展开快键
-let g:user_zen_expandabbr_key='<C-e>'
+"let g:user_zen_expandabbr_key='<C-e>'
+" 映射Alt+e到Ctrl+e
+"imap <A-e> <C-e>
+" 1}}}
+" --------------------------------------------------
+" [emmet相关配置] {{{1
+" --------------------------------------------------
+" 自定义缩写
+" emmet展开快键
+let g:user_emmet_expandabbr_key='<C-e>'
 " 映射Alt+e到Ctrl+e
 imap <A-e> <C-e>
 " 1}}}
